@@ -5,23 +5,7 @@ from django.shortcuts import render
 views for the posts app.
 """
 from django.http import HttpResponse
-from django.template import Context
-from django.template.loader import get_template
-# from django.views.generic.dates import archive_day
-# from django.views.generic.dates import archive_month
-# from django.views.generic.dates import archive_year
-# from django.views.generic.dates import object_detail
 
-from posts.postutil import get_all_tags
-from posts.postutil import get_all_categories
-from posts.postutil import get_all_posts
-from posts.postutil import get_posts_by_tags
-from posts.postutil import get_tags_by_category
-from posts.postutil import get_category
-from posts.postutil import get_tag
-
-
-###############################
 
 # TODO: fix to use category.type=external
 # (for apps)/home(for home page)
