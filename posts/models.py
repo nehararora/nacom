@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 from django.db import models
-
+from datetime import datetime
 
 """
 Model class for the posts app.
@@ -35,6 +35,11 @@ class Post(models.Model):
     post_comments = models.TextField(blank=True)
     post_mime_type = models.CharField(max_length=256, blank=True)  # TODO: remove??
     post_url = models.SlugField()
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        if not self.id:
+            self.post_datetime = datetime.now()
 
     def __str__(self):
         return self.post_url
