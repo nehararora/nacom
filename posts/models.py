@@ -27,6 +27,5 @@ class Post(models.Model):
     post_content_author = models.CharField(max_length=1024, blank=True)
     post_tags = models.ManyToManyField(Tag)
     post_comments = models.TextField(blank=True)
-    post_mime_type = models.CharField(max_length=256, blank=True) # TODO: remove??
+    post_mime_type = models.CharField(max_length=256, blank=True)  # TODO: remove??
     post_url = models.SlugField()
-
