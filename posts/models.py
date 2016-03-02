@@ -27,19 +27,13 @@ class Category(models.Model):
 
 class Post(models.Model):
     post_author = models.CharField(max_length=128)
-    post_datetime = models.DateTimeField(editable=False)
+    post_datetime = models.DateTimeField(auto_now_add=True)
     post_heading = models.CharField(max_length=1024, blank=True)
     post_content = models.TextField()
     post_content_author = models.CharField(max_length=1024, blank=True)
     post_tags = models.ManyToManyField(Tag)
     post_comments = models.TextField(blank=True)
-    post_mime_type = models.CharField(max_length=256, blank=True)  # TODO: remove??
     post_url = models.SlugField()
-
-    def save(self, force_insert=False, force_update=False, using=None,
-             update_fields=None):
-        if not self.id:
-            self.post_datetime = datetime.now()
 
     def __str__(self):
         return self.post_url
