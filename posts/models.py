@@ -8,12 +8,12 @@ Model class for the posts app.
 
 
 class Tag(models.Model):
-    tag_name = models.CharField(max_length=256, unique=True)
+    tag_name = models.CharField(max_length=255, unique=True)
     tag_description = models.TextField()
 
 
 class Category(models.Model):
-    category_name = models.CharField(max_length=256, unique=True)
+    category_name = models.CharField(max_length=255, unique=True)
     category_tags = models.ManyToManyField(Tag, blank=True, null=True)
     category_description = models.TextField()
     category_content_header = models.TextField(blank=True)
