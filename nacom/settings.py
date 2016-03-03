@@ -49,6 +49,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'gnu_terry_pratchett.middleware.ClacksMiddleware',
 ]
 
 ROOT_URLCONF = 'nacom.urls'
