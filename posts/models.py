@@ -18,6 +18,7 @@ class Category(models.Model):
     category_name = models.CharField(max_length=255, unique=True)
     category_tags = models.ManyToManyField(Tag, blank=True, null=True)
     category_description = models.TextField()
+    category_heading = models.TextField(blank=True)
     category_content_header = models.TextField(blank=True)
 
     def __str__(self):
@@ -32,6 +33,7 @@ class Post(models.Model):
     post_content_author = models.CharField(max_length=1024, blank=True)
     post_tags = models.ManyToManyField(Tag)
     post_comments = models.TextField(blank=True)
+    post_mime_type = models.CharField(max_length=256, blank=True)
     post_url = models.SlugField()
 
     def __str__(self):
