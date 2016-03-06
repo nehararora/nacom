@@ -15,7 +15,7 @@ def category_view(request, category_name="home", page_num=1):
     """
     View to display posts by Category.
 
-    :param request: the HTTP request
+    :param request: The HTTP request
     :param category_name: The category to use for pulling posts.
     :param page_num: Page number
     :return: http response
@@ -57,16 +57,19 @@ def category_view(request, category_name="home", page_num=1):
     return HttpResponse(template.render(context, request))
 
 
-def tag_view(request):
+def tag_view(request, tag_name, page_num=1):
     """
     View to display all posts tagged with tag_name.
 
-    :param request:
-    :param tag_name:
-    :param mode:
-    :param pagenum:
-    :return:
+    :param request: The HTTP request
+    :param tag_name: Requested tag name
+    :param page_num: Page number
+    :return: Http Response
     """
+    template = get_template('posts/post_list_template.html')
+    categories = postutil.get_all_categories()
+    all_tags = postutil.get_all_tags()
+
     return HttpResponse("Hello tag view world")
 
 
