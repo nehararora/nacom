@@ -1,8 +1,9 @@
 """
 views for the posts app.
 """
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.template.loader import get_template
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from . import postutil
 import logging
 
@@ -27,13 +28,23 @@ def category_view(request, category_name="home", page_num=1):
 
     all_tags = postutil.get_all_tags()
 
-    # posts = postutil.get_posts_by_tags(tags)
-    posts = postutil.get_all_posts()
+    # TODO: posts = postutil.get_posts_by_tags(tags)
+    all_posts = postutil.get_all_posts()
+    paginator = Paginator(all_posts, 5)
+    logger.warning("Page Number is " + str(page_num))
+    try:
+        posts = paginator.page(page_num)
+    except EmptyPage:
+        # on out of range return last page
+        raise Http404("Page does not exist")
+        # posts = paginator.page(paginator.num_pages-1)
+
     # posts = postutil.get_posts_by_tags(tags)
     logger.warning("posts: {0}".format(posts))
     logger.warning("Categories: {0}".format(list(categories)))
     logger.warning("Requested: {0}".format(requested_category))
     logger.warning("Tags: {0}".format(tags))
+
     context = {
         'content_header': requested_category.category_name,
         'categories': categories,
