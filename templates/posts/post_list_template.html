@@ -1,0 +1,34 @@
+{%extends "posts/base.html" %}
+{% load markup_tags %}
+{% block banner_text %}
+    <h2>At every step we betray our soul to the world</h2>
+{% endblock %}
+
+
+{% block main_content %}
+
+    {% for p in posts %}
+    <div class="blog-post">
+        <h3>{{ p.post_heading }} <small>{{ p.post_datetime }}</small></h3>
+            <!-- TODO: should be post_url - not post mime type-->
+        <a class="post-url" href="/{{p.post_datetime|date:"Y/b/j"}}/{{p.post_mime_type}}">permalink</a> <strong>|</strong>&nbsp;
+        tags: {%for t in p.post_tags.all%}&nbsp;<a class="post-url" href="/tag/{{t.tag_name}}" title="{{t.tag_description}}">{{t.tag_name}}</a>{%endfor%}
+        </p>
+      <!--  <img class="thumbnail" src="http://placehold.it/850x350"> -->
+        <p> {{ p.post_content | escape | apply_markup:"markdown" }}</p>
+        {% if p.post_content_author %}
+            <br />
+        <p>&nbsp;&nbsp;--{{p.post_content_author}}</p>
+        {%endif %}
+
+        <div class="callout">
+            <ul class="menu simple">
+            <li><a href="#">Author: {{ p.post_author| capfirst }}</a></li>
+            <li><a href="#">Comments: 3</a></li>
+            </ul>
+
+        </div>
+    </div>
+    {% endfor %}
+
+{% endblock main_content %}
