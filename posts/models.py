@@ -30,6 +30,7 @@ class Post(models.Model):
     post_datetime = models.DateTimeField(auto_now_add=True)
     post_heading = models.CharField(max_length=1024, blank=True)
     post_content = models.TextField()
+
     post_content_author = models.CharField(max_length=1024, blank=True)
     post_tags = models.ManyToManyField(Tag)
     post_comments = models.TextField(blank=True)

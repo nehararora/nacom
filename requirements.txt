@@ -4,3 +4,4 @@ mysqlclient==1.3.7
 django-markup==1.0 # TODO: needed?
 markdown==2.6.5    # TODO: needed?
 django-zurb-foundation-rtl==6.0.6.3
+django-pagedown==0.1.1

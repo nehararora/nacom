@@ -15,7 +15,7 @@
         tags: {%for t in p.post_tags.all%}&nbsp;<a class="post-url" href="/tag/{{t.tag_name}}" title="{{t.tag_description}}">{{t.tag_name}}</a>{%endfor%}
         </p>
       <!--  <img class="thumbnail" src="http://placehold.it/850x350"> -->
-        <p> {{ p.post_content | escape | linebreaks | apply_markup:"markdown" }}</p>
+        <p> {{ p.post_content | escape | apply_markup:"markdown" | linebreaks }}</p>
         {% if p.post_content_author %}
             <br />
         <p>&nbsp;&nbsp;--{{p.post_content_author}}</p>

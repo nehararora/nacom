@@ -1,8 +1,21 @@
 from django.contrib import admin
+from django.forms import ModelForm, CharField
+from pagedown.widgets import AdminPagedownWidget
 
 from .models import Tag
 from .models import Post
 from .models import Category
+
+
+class PostAdminForm(ModelForm):
+    """
+
+    """
+    post_content = CharField(widget=AdminPagedownWidget())
+
+    class Meta:
+        model = Post
+        fields = '__all__'
 
 
 # admin models
@@ -16,6 +29,7 @@ class PostAdmin(admin.ModelAdmin):
     ordering = ('-post_datetime',)
     search_fields = ('post_heading', 'post_content', 'post_url', 'post_content_author')
     save_on_top = True
+    form = PostAdminForm
 
 
 class CategoryAdmin(admin.ModelAdmin):

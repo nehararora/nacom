@@ -29,7 +29,7 @@ def category_view(request, category_name="home", page_num=1):
 
     # posts = postutil.get_posts_by_tags(tags)
     posts = postutil.get_all_posts()
-
+    # posts = postutil.get_posts_by_tags(tags)
     logger.warning("posts: {0}".format(posts))
     logger.warning("Categories: {0}".format(list(categories)))
     logger.warning("Requested: {0}".format(requested_category))
@@ -42,7 +42,6 @@ def category_view(request, category_name="home", page_num=1):
         'all_tags': all_tags,
         'posts': posts,
     }
-
 
     return HttpResponse(template.render(context, request))
 
