@@ -69,8 +69,8 @@ def tag_view(request, tag_name, page_num=1):
     template = get_template('posts/post_list_template.html')
     categories = postutil.get_all_categories()
     all_tags = postutil.get_all_tags()
-
-    return HttpResponse("Hello tag view world")
+    context = {}
+    return HttpResponse(template.render(context, request))
 
 
 # there is no date archive setup as of 2009-04-04, so the only
