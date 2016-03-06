@@ -12,7 +12,7 @@ urlpatterns = [
     url(r'^category/(?P<category_name>\w+)/$', views.category_view, name='home_view'),
 
     # /category/<name>/<page_number>
-    url(r'^category/(?P<category_name>\w+)/$', views.category_view, name='category_view'),
+    url(r'^category/(?P<category_name>\w+)/(?P<page_num>[0-9]+)$', views.category_view, name='category_view'),
 
     # tag views
     url(r'^tag/$', views.tag_view),
