@@ -54,7 +54,14 @@
 </div>
 <div class="row column">
     <ul class="pagination" role="navigation" aria-label="Pagination">
-        <li class="disabled">Previous</li>
+        {% if posts.has_previous %}
+            <li><a href="{% url 'category_view' requested_category.category_name posts.previous_page_number %}"
+                   aria-label="Previous page">Previous</a></li>
+
+        {% else %}
+            <li class="disabled">Previous</li>
+        {% endif %}
+
         <li class="current"><span class="show-for-sr">You're on page</span> 1</li>
         <li><a href="#" aria-label="Page 2">2</a></li>
         <li><a href="#" aria-label="Page 3">3</a></li>
@@ -62,7 +69,15 @@
         <li class="ellipsis"></li>
         <li><a href="#" aria-label="Page 12">12</a></li>
         <li><a href="#" aria-label="Page 13">13</a></li>
-        <li><a href="#" aria-label="Next page">Next</a></li>
+
+        {% if posts.has_next %}
+            <li><a href="{% url 'category_view' requested_category.category_name posts.next_page_number %}"
+                   aria-label="Next page">Next</a></li>
+        {% else %}
+            <li class="disabled">Next</li>
+        {% endif %}
+
+
     </ul>
 </div>
 {% endblock base_body %}
