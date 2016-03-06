@@ -1,0 +1,68 @@
+{%extends "foundation/base.html" %}
+
+<title>{% block title %} Nehar's Blargh {% endblock %}</title>
+
+
+{% block base_body %}
+<div class="top-bar">
+    <div class="top-bar-left">
+        <ul class="menu">
+        <li class="menu-text">Musings</li>
+        </ul>
+    </div>
+    <div class="top-bar-right">
+        <ul class="menu">
+        {% for cat in categories %}
+            {% if requested_category.category_name == cat.category_name %}
+            <li><b><a href="/category/{{ cat.category_name }}">{{ cat.category_name }}</a></b></li>
+            {% else %}
+            <li><a href="/category/{{ cat.category_name }}">{{ cat.category_name }}</a></li>
+            {% endif %}
+        {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<div class="callout large primary">
+    <div class="row column text-center">
+    {% block banner_text %}
+        <h1>My Blog</h1>
+    {% endblock %}
+    </div>
+</div>
+
+<div class="row" id="content">
+    <div class="medium-8 columns">
+    {% block main_content %} {% endblock main_content %}
+    </div>
+
+    <div class="medium-3 columns" data-sticky-container>
+        <div class="sticky" data-sticky data-anchor="content">
+        <h4>Tags</h4>
+        <ul>
+        {% for tag in all_tags %}
+            <li> {% if tag.tag_name in tags %}
+                    <b><a href="/tag/{{ tag.tag_name }}">{{ tag.tag_name }}</a></b>
+                {% else %}
+                    <a href="/tag/{{ tag.tag_name }}">{{ tag.tag_name }}</a>
+                {% endif %}
+            </li>
+        {% endfor %}
+        </ul>
+        </div>
+    </div>
+</div>
+<div class="row column">
+    <ul class="pagination" role="navigation" aria-label="Pagination">
+        <li class="disabled">Previous</li>
+        <li class="current"><span class="show-for-sr">You're on page</span> 1</li>
+        <li><a href="#" aria-label="Page 2">2</a></li>
+        <li><a href="#" aria-label="Page 3">3</a></li>
+        <li><a href="#" aria-label="Page 4">4</a></li>
+        <li class="ellipsis"></li>
+        <li><a href="#" aria-label="Page 12">12</a></li>
+        <li><a href="#" aria-label="Page 13">13</a></li>
+        <li><a href="#" aria-label="Next page">Next</a></li>
+    </ul>
+</div>
+{% endblock base_body %}
