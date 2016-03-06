@@ -1,28 +1,51 @@
-from django.shortcuts import render
-
-# Create your views here.
 """
 views for the posts app.
 """
 from django.http import HttpResponse
+from django.template.loader import get_template
+from . import postutil
+import logging
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 
 
-# TODO: fix to use category.type=external
-# (for apps)/home(for home page)
-def category_view(request):
+def category_view(request, category_name="home", page_num=1):
     """
     View to display posts by Category.
 
-    :param request:
-    :param category_name:
-    :param mode:
-    :param pagenum:
-    :return:
+    :param request: the HTTP request
+    :param category_name: The category to use for pulling posts.
+    :param page_num: Page number
+    :return: http response
     """
-    return HttpResponse("Hello category world!")
+    template = get_template('posts/post_list_template.html')
+
+    categories = postutil.get_all_categories()
+    requested_category = postutil.get_category(category_name=category_name)
+    tags = postutil.get_tags_by_category(category_name)
+
+    all_tags = postutil.get_all_tags()
+
+    # posts = postutil.get_posts_by_tags(tags)
+    posts = postutil.get_all_posts()
+
+    logger.warning("posts: {0}".format(posts))
+    logger.warning("Categories: {0}".format(list(categories)))
+    logger.warning("Requested: {0}".format(requested_category))
+    logger.warning("Tags: {0}".format(tags))
+    context = {
+        'content_header': requested_category.category_name,
+        'categories': categories,
+        'requested_category': requested_category,
+        'tags': [t.tag_name for t in tags],
+        'all_tags': all_tags,
+        'posts': posts,
+    }
 
 
-###############################
+    return HttpResponse(template.render(context, request))
+
 
 def tag_view(request):
     """
@@ -37,11 +60,6 @@ def tag_view(request):
     return HttpResponse("Hello tag view world")
 
 
-###############################
-
-# wrapper view that sets up the extra_context before
-# calling django's generic date views.
-
 # there is no date archive setup as of 2009-04-04, so the only
 # way this view gets called right now is if someone puts in the
 # date url in the address bar *or* if some post does not have
@@ -49,7 +67,9 @@ def tag_view(request):
 # goes through the date view.
 def date_view(request):
     """
-    View to display posts by date.
+    Display posts by date.
+
+    wrapper view that sets up the extra_context before calling django's generic date views.
 
     :param request:
     :param year:
@@ -60,8 +80,6 @@ def date_view(request):
     """
     return HttpResponse("Hello date view world")
 
-
-###############################
 
 def slug_view(request):
     """
@@ -78,8 +96,6 @@ def slug_view(request):
 
     return HttpResponse("Hello Slug view world")
 
-
-###############################
 
 def about_view(request):
     """
@@ -99,5 +115,3 @@ def about_view(request):
     """
     return HttpResponse("Hello about view world")
 
-
-###############################
