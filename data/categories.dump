@@ -1,0 +1,11 @@
+
+--
+-- Dumping data for table `posts_category`
+--
+
+USE nehar_blog;
+LOCK TABLES `posts_category` WRITE;
+/*!40000 ALTER TABLE `posts_category` DISABLE KEYS */;
+INSERT INTO `posts_category` VALUES (1,'writing','all things written','I am moved by fancies that are curled  \r\nAround these images, and cling:  \r\nThe notion of some infinitely gentle  \r\nInfinitely suffering thing.','the written wrod.'),(2,'home','everything','Let me show you how it must be... This is how the story goes.',''),(3,'music','music related posts','You are the music while the music lasts','Category: music'),(4,'source','Source code etc.','Sourcery','Code snippets etc.'),(5,'about','about section','about',''),(6,'mine','my creative output :)','','my creative output :) ');
+/*!40000 ALTER TABLE `posts_category` ENABLE KEYS */;
+UNLOCK TABLES;
