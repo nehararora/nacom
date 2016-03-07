@@ -23,13 +23,17 @@ def category_view(request, category_name="home", page_num=1):
     template = get_template('posts/post_list_template.html')
 
     categories = postutil.get_all_categories()
-    requested_category = postutil.get_category(category_name=category_name)
-    tags = postutil.get_tags_by_category(category_name)
-
     all_tags = postutil.get_all_tags()
 
+    # category tags to pass on to the view.
+    tags = [t.tag_name for t in postutil.get_tags_by_category(category_name)]
+
+    requested_category = postutil.get_category(category_name=category_name)
+
     # TODO: posts = postutil.get_posts_by_tags(tags)
-    all_posts = postutil.get_all_posts()
+    # un-paginated posts
+    all_posts = postutil.get_posts_by_tags(tags)
+
     paginator = Paginator(all_posts, 5)
     logger.warning("Page Number is " + str(page_num))
     try:
@@ -38,7 +42,7 @@ def category_view(request, category_name="home", page_num=1):
         # on out of range return last page
         raise Http404("Page does not exist")
         # posts = paginator.page(paginator.num_pages-1)
-
+    print("tags are {0}".format((t.tag_name for t in tags)))
     # posts = postutil.get_posts_by_tags(tags)
     logger.warning("posts: {0}".format(posts))
     logger.warning("Categories: {0}".format(list(categories)))
@@ -49,7 +53,7 @@ def category_view(request, category_name="home", page_num=1):
         'content_header': requested_category.category_name,
         'categories': categories,
         'requested_category': requested_category,
-        'tags': [t.tag_name for t in tags],
+        'requested_tags': tags,
         'all_tags': all_tags,
         'posts': posts,
     }
@@ -69,7 +73,18 @@ def tag_view(request, tag_name, page_num=1):
     template = get_template('posts/post_list_template.html')
     categories = postutil.get_all_categories()
     all_tags = postutil.get_all_tags()
-    context = {}
+    tags = (tag_name,)
+
+    posts = postutil.get_posts_by_tags(tags)
+
+    context = {
+        # 'content_header': requested_category.category_name,
+        'categories': categories,
+        'requested_tags': (tag_name,),
+        'all_tags': all_tags,
+        'posts': posts,
+    }
+
     return HttpResponse(template.render(context, request))
 
 

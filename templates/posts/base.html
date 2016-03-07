@@ -67,7 +67,7 @@
         <h4>Tags</h4>
         <ul>
         {% for tag in all_tags %}
-            <li> {% if tag.tag_name in tags %}
+            <li> {% if tag.tag_name in requested_tags %}
                     <b><a href="/tag/{{ tag.tag_name }}">{{ tag.tag_name }}</a></b>
                 {% else %}
                     <a href="/tag/{{ tag.tag_name }}">{{ tag.tag_name }}</a>
