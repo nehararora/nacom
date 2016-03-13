@@ -3,7 +3,8 @@ views for the posts app.
 """
 from django.http import HttpResponse, Http404
 from django.template.loader import get_template
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.paginator import EmptyPage, PageNotAnInteger
+from . import pagination
 from . import postutil
 import logging
 
@@ -34,15 +35,19 @@ def category_view(request, category_name="home", page_num=1):
     # un-paginated posts
     all_posts = postutil.get_posts_by_tags(tags)
 
-    paginator = Paginator(all_posts, 5)
+    # paginator = Paginator(all_posts, 5)
+    paginator = pagination.Pages(all_posts, 5)
     logger.warning("Page Number is " + str(page_num))
+
+    # TODO: need to fix last empty page - only happens in dev?
     try:
         posts = paginator.page(page_num)
+        # print(posts.paginator.pages_to_show(int(page_num)))
+
     except EmptyPage:
         # on out of range return last page
         raise Http404("Page does not exist")
         # posts = paginator.page(paginator.num_pages-1)
-    print("tags are {0}".format((t.tag_name for t in tags)))
     # posts = postutil.get_posts_by_tags(tags)
     logger.warning("posts: {0}".format(posts))
     logger.warning("Categories: {0}".format(list(categories)))
