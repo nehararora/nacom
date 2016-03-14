@@ -2,7 +2,7 @@
 <div class="row column">
     <ul class="pagination" role="navigation" aria-label="Pagination">
         {% if posts.has_previous %}
-            <li><a href="{% url 'category_view' requested_category.category_name posts.previous_page_number %}"
+            <li><a href="{% url view_name path posts.previous_page_number %}"
                    aria-label="Previous page">&laquo;Previous</a></li>
         {% else %}
             <li class="disabled">Previous</li>
@@ -14,12 +14,12 @@
             {% elif num == posts.number %}
                 <li class="current"><span class="show-for-sr">You're on</span>{{ posts.number }}</li>
             {% else %}
-                <li><a href="{% url 'category_view' requested_category.category_name num %}" aria-label="Page {{ num }}">{{ num }}</a></li>
+                <li><a href="{% url view_name path num %}" aria-label="Page {{ num }}">{{ num }}</a></li>
             {% endif %}
         {% endfor %}
 
         {% if posts.has_next %}
-            <li><a href="{% url 'category_view' requested_category.category_name posts.next_page_number %}"
+            <li><a href="{% url view_name path posts.next_page_number %}"
                    aria-label="Next page">Next&raquo;</a></li>
         {% else %}
             <li class="disabled">Next</li>

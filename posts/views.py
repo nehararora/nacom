@@ -26,34 +26,26 @@ def category_view(request, category_name="home", page_num=1):
     categories = postutil.get_all_categories()
     all_tags = postutil.get_all_tags()
 
-    # category tags to pass on to the view.
+    # category tags to pass on to the template for highlighting.
     tags = [t.tag_name for t in postutil.get_tags_by_category(category_name)]
 
     requested_category = postutil.get_category(category_name=category_name)
 
-    # TODO: posts = postutil.get_posts_by_tags(tags)
     # un-paginated posts
     all_posts = postutil.get_posts_by_tags(tags)
 
-    # paginator = Paginator(all_posts, 5)
+    # get our custom paginator
     paginator = pagination.Pages(all_posts, 5)
-    logger.warning("Page Number is " + str(page_num))
 
     # TODO: need to fix last empty page - only happens in dev?
     try:
         posts = paginator.page(page_num)
-        # print(posts.paginator.pages_to_show(int(page_num)))
 
     except EmptyPage:
         # on out of range return last page
         raise Http404("Page does not exist")
-        # posts = paginator.page(paginator.num_pages-1)
-    # posts = postutil.get_posts_by_tags(tags)
-    logger.warning("posts: {0}".format(posts))
-    logger.warning("Categories: {0}".format(list(categories)))
-    logger.warning("Requested: {0}".format(requested_category))
-    logger.warning("Tags: {0}".format(tags))
 
+    # create context to pass into the template.
     context = {
         'content_header': requested_category.category_name,
         'categories': categories,
@@ -61,6 +53,8 @@ def category_view(request, category_name="home", page_num=1):
         'requested_tags': tags,
         'all_tags': all_tags,
         'posts': posts,
+        'view_name': 'category_view',
+        'path': requested_category,
     }
 
     return HttpResponse(template.render(context, request))
@@ -79,16 +73,31 @@ def tag_view(request, tag_name, page_num=1):
     categories = postutil.get_all_categories()
     all_tags = postutil.get_all_tags()
     tags = (tag_name,)
+    logger.debug("Tags: ".format(tags))
+    # logger.debug("categories: {0}".format(categories))
+    all_posts = postutil.get_posts_by_tags(tags)
 
-    posts = postutil.get_posts_by_tags(tags)
+    paginator = pagination.Pages(all_posts, 5)
+
+    try:
+        posts = paginator.page(page_num)
+
+    except EmptyPage:
+        # on out of range return last page
+        logger.warn("Empty page.")
+        raise Http404("Page does not exist")
 
     context = {
-        # 'content_header': requested_category.category_name,
+        'content_header': tag_name,
         'categories': categories,
-        'requested_tags': (tag_name,),
+        'requested_tags': tags,
         'all_tags': all_tags,
         'posts': posts,
+        'view_name': 'tag_view',
+        'path': tag_name,
     }
+
+    print("Context: {0}".format(context))
 
     return HttpResponse(template.render(context, request))
 
