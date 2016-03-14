@@ -73,8 +73,6 @@ def tag_view(request, tag_name, page_num=1):
     categories = postutil.get_all_categories()
     all_tags = postutil.get_all_tags()
     tags = (tag_name,)
-    logger.debug("Tags: ".format(tags))
-    # logger.debug("categories: {0}".format(categories))
     all_posts = postutil.get_posts_by_tags(tags)
 
     paginator = pagination.Pages(all_posts, 5)
@@ -96,8 +94,6 @@ def tag_view(request, tag_name, page_num=1):
         'view_name': 'tag_view',
         'path': tag_name,
     }
-
-    print("Context: {0}".format(context))
 
     return HttpResponse(template.render(context, request))
 
