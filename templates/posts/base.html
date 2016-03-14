@@ -1,7 +1,12 @@
 {%extends "foundation/base.html" %}
 
-<title>{% block title %} Nehar's Blargh: {{ content_header }} {% endblock %}</title>
+{% load staticfiles %}
 
+{% block foundation_jquery %}
+    <script src="{% static "foundation/js/vendor/jquery.min.js" %}"></script>
+{% endblock foundation_jquery %}
+
+<title>{% block title %} Nehar's Blargh: {{ content_header }} {% endblock %}</title>
 
 {% block base_body %}
 
