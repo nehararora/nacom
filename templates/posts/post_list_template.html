@@ -17,7 +17,7 @@
         <p> {{ p.post_content | escape | apply_markup:"markdown" | linebreaks }}</p>
         {% if p.post_content_author %}
             <br />
-        <p>&nbsp;&nbsp;--{{p.post_content_author}}</p>
+        <p><b>&nbsp;&nbsp;-- {{p.post_content_author}}</b></p>
         {%endif %}
 
         <div class="callout">
