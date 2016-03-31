@@ -6,12 +6,16 @@
 
 
 {% block main_content %}
-
-    {% for p in posts %}
     <div class="blog-post">
+    {% with post as p %}
         <h3>{{ p.post_heading | title }} <small>{{ p.post_datetime }}</small></h3>
-        <a class="post-url" href="/{{p.post_datetime|date:"Y/b/j"}}/{{p.post_url}}">permalink</a> <strong>|</strong>&nbsp;
-        tags: {%for t in p.post_tags.all%}&nbsp;<a class="post-url" href="/tag/{{t.tag_name}}" title="{{t.tag_description}}">{{t.tag_name}}</a>{%endfor%}
+
+        {% url view_name p.post_datetime|date:"Y"  p.post_datetime|date:"b"  p.post_datetime|date:"j" p.post_url as the_url %}
+        <a class="post-url" href="{{ the_url }}" >permalink</a> <strong>|</strong>&nbsp;
+        tags:
+        {%for t in p.post_tags.all%}&nbsp;
+            <a class="post-url" href={% url "tag_view" t.tag_name %} title="{{t.tag_description}}">{{t.tag_name}}</a>
+        {%endfor%}
 
       <!--  <img class="thumbnail" src="http://placehold.it/850x350"> -->
         <p> {{ p.post_content | escape | apply_markup:"markdown" | linebreaks }}</p>
@@ -27,9 +31,8 @@
             <li><a href="#">Comments: 3</a></li>
             -->
             </ul>
-
+        {% endwith %}
         </div>
     </div>
-    {% endfor %}
 
 {% endblock main_content %}
