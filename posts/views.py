@@ -4,14 +4,20 @@ views for the posts app.
 from django.http import HttpResponse, Http404
 from django.template.loader import get_template
 from django.core.paginator import EmptyPage, PageNotAnInteger
+# from django.views.generic import DetailView
+from django.views.generic import DateDetailView
+
 from . import pagination
 from . import postutil
+from .models import Post
+
 import logging
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
 
+# TODO: convert to generic list view?
 def category_view(request, category_name="home", page_num=1):
     """
     View to display posts by Category.
@@ -119,12 +125,11 @@ def date_view(request):
     return HttpResponse("Hello date view world")
 
 
-def slug_view(request):
+def slug_view(request, year, month, day, slug):
     """
     View to display post by slug and date.
 
     :param request:
-    :param mode:
     :param year:
     :param month:
     :param day:
@@ -153,3 +158,31 @@ def about_view(request):
     """
     return HttpResponse("Hello about view world")
 
+
+class PostDetailView(DateDetailView):
+    """
+    Single Post View.
+
+    Displays posts matching slug and date from the url. In case of multiple
+    slug matches, displays posts ordered by date.
+    """
+    model = Post
+    slug_field = "post_url"
+    slug_url_kwarg = "post_url"
+    context_object_name = "post"
+
+    def get_context_data(self, **kwargs):
+        """
+        hook for overriding context
+        :param kwargs:
+        :return:
+        """
+        context = super(DateDetailView, self).get_context_data(**kwargs)
+
+        # setup extra context
+        context['categories'] = postutil.get_all_categories()
+        context['all_tags'] = postutil.get_all_tags()
+        context['view_name'] = 'post_detail'
+        print(context)
+
+        return context
