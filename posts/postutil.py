@@ -90,7 +90,7 @@ def get_tags_by_category(category_name):
     return Tag.objects.filter(category__category_name=category_name)
 
 
-def get_post_by_slug(post_slug):
+def get_post_by_slug_and_date(post_slug):
     """
     Get Post objects with slug matching input. In case the slug is not unique
     multiple objects ordered by post time are returned.
