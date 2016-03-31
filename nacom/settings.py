@@ -68,6 +68,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'posts.context_processors.analytics',
             ],
         },
     },
@@ -126,8 +127,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
-
+STATIC_ROOT = '/Users/nehar/src/nacom/static'
 STATIC_URL = '/static/'
-
-# google analytics
 GOOGLE_ANALYTICS_KEY = "UA-XXXXXXX-X"
