@@ -24,13 +24,7 @@ urlpatterns = [
     # /tag/<name>/<page_number>
     url(r'^tag/(?P<tag_name>\w+)/(?P<page_num>[0-9]+)/$', views.tag_view, name='tag_view'),
 
-    # TODO: date views - do we wants?
-    url(r'^date/$', views.date_view),
-
     # permalink
     url(r'^(?P<year>\d{4})/(?P<month>[a-z]{3})/(?P<day>\w{1,2})/(?P<post_url>[0-9A-Za-z-]+)$',
         views.PostDetailView.as_view(model=Post, date_field="post_datetime"), name='post_detail'),
-
-    # about view
-    url(r'^about/$', views.about_view, name='about')
 ]

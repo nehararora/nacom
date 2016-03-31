@@ -17,7 +17,8 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
 
-# TODO: convert to generic list view?
+# TODO: convert everything to generic class based views?
+
 def category_view(request, category_name="home", page_num=1):
     """
     View to display posts by Category.
@@ -102,61 +103,6 @@ def tag_view(request, tag_name, page_num=1):
     }
 
     return HttpResponse(template.render(context, request))
-
-
-# there is no date archive setup as of 2009-04-04, so the only
-# way this view gets called right now is if someone puts in the
-# date url in the address bar *or* if some post does not have
-# the post_url field populated, in which case the post url link
-# goes through the date view.
-def date_view(request):
-    """
-    Display posts by date.
-
-    wrapper view that sets up the extra_context before calling django's generic date views.
-
-    :param request:
-    :param year:
-    :param mode:
-    :param month:
-    :param day:
-    :return:
-    """
-    return HttpResponse("Hello date view world")
-
-
-def slug_view(request, year, month, day, slug):
-    """
-    View to display post by slug and date.
-
-    :param request:
-    :param year:
-    :param month:
-    :param day:
-    :param slug:
-    :return:
-    """
-
-    return HttpResponse("Hello Slug view world")
-
-
-def about_view(request):
-    """
-
-    View for the about section. Grabs posts tagged with tag_name and pushes
-    them to the about template. *Don't* add tag_name tag to the 'home'
-    category if you don't want it to show up in the all posts section.
-    Should merge this with the category view - can be handled using the
-    'about' category, which only has the 'meta' tag.
-    only using this to keep the urls separated.
-
-    :param request:
-    :param mode:
-    :param tag_name:
-    :param pagenum:
-    :return:
-    """
-    return HttpResponse("Hello about view world")
 
 
 class PostDetailView(DateDetailView):
