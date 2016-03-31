@@ -4,14 +4,17 @@
     <h2>Nehar's Blog</h2>
 {% endblock %}
 
-
 {% block main_content %}
 
     {% for p in posts %}
+        {% url "post_detail" p.post_datetime|date:"Y"  p.post_datetime|date:"b"  p.post_datetime|date:"j" p.post_url as detail_url %}
     <div class="blog-post">
         <h3>{{ p.post_heading | title }} <small>{{ p.post_datetime }}</small></h3>
-        <a class="post-url" href="/{{p.post_datetime|date:"Y/b/j"}}/{{p.post_url}}">permalink</a> <strong>|</strong>&nbsp;
-        tags: {%for t in p.post_tags.all%}&nbsp;<a class="post-url" href="/tag/{{t.tag_name}}" title="{{t.tag_description}}">{{t.tag_name}}</a>{%endfor%}
+        <a class="post-url" href="{{ detail_url }}">permalink</a> <strong>|</strong>&nbsp;
+        tags:
+        {%for t in p.post_tags.all%}&nbsp;
+            <a class="post-url" href={% url "tag_view" t.tag_name %} title="{{t.tag_description}}">{{t.tag_name}}</a>
+        {%endfor%}
 
       <!--  <img class="thumbnail" src="http://placehold.it/850x350"> -->
         <p> {{ p.post_content | escape | apply_markup:"markdown" | linebreaks }}</p>
