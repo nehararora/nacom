@@ -85,7 +85,7 @@ DATABASES = {
         'NAME': 'nehar_blog',
         'USER': 'nehar',
         'PASSWORD': 'copyleft',
-        'HOST': '192.168.1.52',
+        'HOST': '192.168.100.8',
     }
 }
 
@@ -126,4 +126,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
+
 STATIC_URL = '/static/'
+
+# google analytics
+GOOGLE_ANALYTICS_KEY = "UA-XXXXXXX-X"
