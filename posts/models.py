@@ -16,7 +16,7 @@ class Tag(models.Model):
 
 class Category(models.Model):
     category_name = models.CharField(max_length=255, unique=True)
-    category_tags = models.ManyToManyField(Tag, blank=True, null=True)
+    category_tags = models.ManyToManyField(Tag, blank=True)
     category_description = models.TextField()
     category_heading = models.TextField(blank=True)
     category_content_header = models.TextField(blank=True)

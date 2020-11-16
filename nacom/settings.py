@@ -43,16 +43,16 @@ INSTALLED_APPS = [
     'pagedown',
 ]
 
-MIDDLEWARE_CLASSES = [
+MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'gnu_terry_pratchett.middleware.ClacksMiddleware',
+    # TODO: most probably will need to find an alternative
+    # 'gnu_terry_pratchett.middleware.ClacksMiddleware',
 ]
 
 ROOT_URLCONF = 'nacom.urls'
