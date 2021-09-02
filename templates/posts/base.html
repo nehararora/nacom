@@ -1,14 +1,15 @@
-{%extends "foundation/base.html" %}
+{%extends "bootstrap5/bootstrap5.html" %}
 
-{% load staticfiles %}
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
 
-{% block foundation_jquery %}
-    <script src="{% static "foundation/js/vendor/jquery.min.js" %}"></script>
-{% endblock foundation_jquery %}
 
 <title>{% block title %} Nehar's Blargh: {{ content_header }} {% endblock %}</title>
 
-{% block base_body %}
+{% block bootstrap5_content %}
+# {% block base_body %}
 
     {% block top_bar %}
         <div class="top-bar">
@@ -66,5 +67,6 @@
     {% block bottom_nav %} {% include 'posts/pagination.html' %} {% endblock %}
     {{ analytics_code }}
 
-{% endblock base_body %}
+# {% endblock base_body %}
+{% endblock bootstrap5_content %}
 
