@@ -20,12 +20,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'j0kbwue^iuz%y)w-c*dxmh=*haem^+%8tnqh+x2pcc!40c9q57'
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY",
+                       "j0kbwue^iuz%y)w-c*dxmh=*haem^+%8tnqh+x2pcc!40c9q57")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DJANGO_DEBUG", True)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1").split(",")
 
 
 # Application definition
@@ -39,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_markup',
-    'foundation',
+    'bootstrap5',
     'pagedown',
 ]
 
@@ -83,13 +84,13 @@ WSGI_APPLICATION = 'nacom.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'nehar_blog',
-        'USER': 'nehar',
-        'PASSWORD': 'copyleft',
-        'HOST': '192.168.100.8',
+        "NAME": os.getenv("DJANGO_DATABASE_NAME", "nehar_blog"),
+        # 'USER': 'nehar',
+        "USER": os.getenv("DJANGO_DATABASE_USER", "root"),
+        'PASSWORD': os.getenv("DJANGO_DATABASE_PASSWORD", "mypassword"),
+        "HOST": os.getenv("DJANGO_DATABASE_HOST", "127.0.0.1"),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
@@ -127,6 +128,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
-STATIC_ROOT = '/Users/nehar/src/nacom/static'
+STATIC_ROOT = os.getenv("DJANGO_STATIC_ROOT", "/Users/nehar/Documents/src/nacom/static")
 STATIC_URL = '/static/'
 GOOGLE_ANALYTICS_KEY = "UA-XXXXXXX-X"
